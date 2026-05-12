@@ -36,6 +36,16 @@ export const Route = createFileRoute("/")({
 
 type LocationKey = "dubai" | "istanbul";
 
+function googleMapsEmbedSrc(query: string, hl?: string, zoom?: number) {
+  const hlPart = hl ? `&hl=${hl}` : "";
+  const zPart = zoom != null ? `&z=${zoom}` : "";
+  return `https://www.google.com/maps?q=${encodeURIComponent(query)}&output=embed${hlPart}${zPart}`;
+}
+
+function googleMapsDirectionsUrl(query: string) {
+  return `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(query)}`;
+}
+
 const LOCATIONS: Record<
   LocationKey,
   {
@@ -47,27 +57,39 @@ const LOCATIONS: Record<
     hours: string;
     currency: string;
     mapLabel: string;
+    /** Used for embedded map + “Get directions” (Google listing / address). */
+    mapSearchQuery: string;
+    /** If set, iframe uses this URL verbatim (from Google Maps → Share → Embed a map) for a pixel-identical embed. */
+    mapEmbedSrc?: string;
+    /** Optional zoom for `q=` embeds (Google’s default varies by listing). */
+    mapZoom?: number;
   }
 > = {
   dubai: {
     flag: "🇦🇪",
     label: "DUBAI",
-    address: "Wonderstouch, Umm Al Sheif, Dubai, UAE",
-    phone: "+971 4 XXX XX",
-    whatsapp: "+971 50 XXX XXXX",
+    address:
+      "Al Asmawi Building, 1st floor, Office #121.\nBeside MG Motor showroom, near Umm Al Sheif Metro Station, Sheikh Zayed Road, Dubai.",
+    phone: "+971 50 947 4850",
+    whatsapp: "+971 50 947 4850",
     hours: "Sat–Thu: 9:00 AM – 10:00 PM  •  Fri: 2:00 PM – 10:00 PM",
     currency: "AED",
-    mapLabel: "Umm Al Sheif, Dubai",
+    mapLabel: "Al Asmawi Building, Sheikh Zayed Road, Dubai",
+    // Matches the public Google listing card (“Wonderstouch Barbershop Dubai”) so the embed shows the same place, pin, and info panel as on Google Maps.
+    mapSearchQuery:
+      "Wonderstouch Barbershop Dubai, Before Bentley show rooms, Al Asmawi Building - Ground floor, office #11 - Sheikh Zayed Rd - Umm Al Sheif - Dubai - United Arab Emirates",
+    mapZoom: 11,
   },
   istanbul: {
     flag: "🇹🇷",
     label: "ISTANBUL",
-    address: "Wonderstouch, Elgün Sokağı, Istanbul, Turkey",
-    phone: "+90 212 XXX XXXX",
-    whatsapp: "+90 530 XXX XXXX",
+    address: "Merkez Mahallesi, Nakiye Elgün Sokağı.\nNo 47/4 Şişli, Istanbul",
+    phone: "+90 552 608 69 98",
+    whatsapp: "+90 552 608 69 98",
     hours: "Mon–Sun: 10:00 AM – 9:00 PM",
     currency: "EUR",
-    mapLabel: "Elgün Sokağı, Istanbul",
+    mapLabel: "Nakiye Elgün Sokağı, Şişli, Istanbul",
+    mapSearchQuery: "Merkez, Nakiye Elgün Sok. 47/4, 34384 Şişli/İstanbul, Türkiye",
   },
 };
 
@@ -515,31 +537,6 @@ function Wonderstouch() {
         </button>
       </nav>
 
-      {/* Location banner */}
-      <div
-        style={{
-          position: "fixed",
-          top: 76,
-          left: 0,
-          right: 0,
-          zIndex: 999,
-          background: "#1A1A1A",
-          padding: "10px 40px",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          gap: 16,
-          fontSize: 12,
-          color: "#888",
-          textTransform: "uppercase",
-          letterSpacing: "0.2em",
-          fontFamily: "Inter",
-        }}
-      >
-        <span className="desktop-only">CHOOSE YOUR LOCATION:</span>
-        <LocationPills location={location} setLocation={setLocation} />
-      </div>
-
       {/* MOBILE MENU */}
       <AnimatePresence>
         {mobileOpen && (
@@ -619,7 +616,7 @@ function Wonderstouch() {
           overflow: "hidden",
           display: "flex",
           alignItems: "center",
-          paddingTop: isMobile ? 140 : 160,
+          paddingTop: isMobile ? 100 : 120,
           paddingBottom: isMobile ? 100 : 120,
         }}
       >
@@ -1605,7 +1602,7 @@ function Wonderstouch() {
                   ].map(({ Icon, color, text }, i) => (
                     <div key={i} style={{ display: "flex", alignItems: "center", gap: 16 }}>
                       <Icon size={20} color={color} />
-                      <span style={{ fontSize: 15, color: "#3D3D3D" }}>{text}</span>
+                      <span style={{ fontSize: 15, color: "#3D3D3D", whiteSpace: "pre-line" }}>{text}</span>
                     </div>
                   ))}
                 </div>
@@ -1627,6 +1624,10 @@ function Wonderstouch() {
                     CALL NOW
                   </button>
                   <button
+                    type="button"
+                    onClick={() =>
+                      window.open(googleMapsDirectionsUrl(loc.mapSearchQuery), "_blank", "noopener,noreferrer")
+                    }
                     style={{
                       background: "transparent",
                       color: "#D4AF37",
@@ -1649,39 +1650,38 @@ function Wonderstouch() {
               </div>
               <div
                 style={{
-                  height: 380,
-                  background: "#1A1A1A",
+                  height: 420,
+                  minHeight: 380,
+                  background: "#E5E3DF",
                   border: "1px solid #D4AF37",
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  textAlign: "center",
-                  padding: 30,
+                  overflow: "hidden",
+                  position: "relative",
                 }}
               >
-                <MapPin size={48} color="#D4AF37" />
-                <div className="bebas" style={{ fontSize: 30, color: "#fff", marginTop: 16 }}>
-                  WONDERSTOUCH
-                </div>
-                <div style={{ fontSize: 13, color: "#888", marginTop: 6 }}>{loc.mapLabel}</div>
-                <button
+                <iframe
+                  key={location}
+                  title={`Wonderstouch ${loc.label} — Google Map`}
+                  src={
+                    loc.mapEmbedSrc ??
+                    googleMapsEmbedSrc(
+                      loc.mapSearchQuery,
+                      location === "istanbul" ? "tr" : "en",
+                      loc.mapZoom,
+                    )
+                  }
+                  width="100%"
+                  height="100%"
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                  allowFullScreen
                   style={{
-                    marginTop: 24,
-                    background: "transparent",
-                    color: "#D4AF37",
-                    border: "1.5px dotted #D4AF37",
-                    padding: "12px 24px",
-                    fontSize: 11,
-                    letterSpacing: "0.18em",
-                    textTransform: "uppercase",
-                    fontWeight: 600,
-                    cursor: "pointer",
-                    fontFamily: "Inter",
+                    border: 0,
+                    display: "block",
+                    width: "100%",
+                    height: "100%",
+                    minHeight: 380,
                   }}
-                >
-                  OPEN IN GOOGLE MAPS →
-                </button>
+                />
               </div>
             </div>
           </Reveal>
