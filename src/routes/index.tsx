@@ -360,6 +360,7 @@ function Wonderstouch() {
       @keyframes ws-bounce { 0%,100%{transform:translateY(0)} 50%{transform:translateY(10px)} }
       @keyframes ws-shimmer { 0%{background-position:0% 50%} 50%{background-position:100% 50%} 100%{background-position:0% 50%} }
       @keyframes ws-pulse { 0%,100%{box-shadow:0 6px 24px rgba(37,211,102,0.4)} 50%{box-shadow:0 6px 36px rgba(37,211,102,0.65)} }
+      @keyframes ws-kenburns { 0%{transform:scale(1) translate(0,0)} 100%{transform:scale(1.08) translate(-1%,-1%)} }
       .service-card:hover .service-overlay { opacity:1; }
       .service-card:hover .service-img { transform:scale(1.05); }
       .gallery-item:hover .gallery-img { transform:scale(1.04); }
