@@ -25,17 +25,17 @@ export const Route = createFileRoute("/")({
   component: VyneBarbershop,
   head: () => ({
     meta: [
-      { title: "VYNE BARBERSHOP — Men's Barbershop & Grooming Lounge | Dubai & Istanbul" },
+      { title: "VYNE BARBERSHOP — Men's Barbershop & Grooming Lounge | Dubai" },
       {
         name: "description",
         content:
-          "VYNE BARBERSHOP is a premier men's barbershop with locations in Umm Al Sheif, Dubai and Elgün Sokağı, Istanbul. Precision cuts, beards, hot towel shaves.",
+          "VYNE BARBERSHOP is a premier men's barbershop located in Umm Al Sheif, Dubai. Precision cuts, beards, hot towel shaves.",
       },
     ],
   }),
 });
 
-type LocationKey = "dubai" | "istanbul";
+type LocationKey = "dubai";
 
 function googleMapsEmbedSrc(query: string, hl?: string, zoom?: number) {
   const hlPart = hl ? `&hl=${hl}` : "";
@@ -80,17 +80,6 @@ const LOCATIONS: Record<
     mapSearchQuery:
       "VYNE BARBERSHOP Barbershop Dubai, Before Bentley show rooms, Al Asmawi Building - Ground floor, office #11 - Sheikh Zayed Rd - Umm Al Sheif - Dubai - United Arab Emirates",
     mapZoom: 11,
-  },
-  istanbul: {
-    flag: "🇹🇷",
-    label: "ISTANBUL",
-    address: "Merkez Mahallesi, Nakiye Elgün Sokağı.\nNo 47/4 Şişli, Istanbul",
-    phone: "+90 552 608 69 98",
-    whatsapp: "+90 552 608 69 98",
-    hours: "Mon–Sun: 10:00 AM – 9:00 PM",
-    currency: "EUR",
-    mapLabel: "Nakiye Elgün Sokağı, Şişli, Istanbul",
-    mapSearchQuery: "Merkez, Nakiye Elgün Sok. 47/4, 34384 Şişli/İstanbul, Türkiye",
   },
 };
 
@@ -163,7 +152,7 @@ const SERVICES = [
   {
     name: "Men's Grooming Packages",
     img: "https://images.unsplash.com/photo-1605497788044-5a32c7078486?w=600&q=80",
-    desc: "Cut + beard + hot towel shave combo packages. Dubai from AED 150, Istanbul from €45.",
+    desc: "Cut + beard + hot towel shave combo packages. Dubai from AED 150.",
   },
   {
     name: "Scalp & Hair Treatments",
@@ -196,13 +185,6 @@ const REVIEWS = [
     where: "DIFC, Dubai",
     initial: "M",
   },
-  {
-    quote:
-      "Found the Istanbul branch while travelling and it completely blew me away. Same sharp standard as Dubai. Unbelievable consistency across two cities.",
-    name: "Emre S.",
-    where: "Beyoğlu, Istanbul",
-    initial: "E",
-  },
 ];
 
 const BARBERS = [
@@ -219,12 +201,6 @@ const BARBERS = [
     img: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400&q=80",
   },
   {
-    name: "Kerem",
-    title: "MASTER BARBER, ISTANBUL",
-    bio: "12 years of award-winning cuts across Istanbul and Berlin. The man behind the Istanbul chair.",
-    img: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&q=80",
-  },
-  {
     name: "Yousef",
     title: "COLOUR & SCALP SPECIALIST",
     bio: "Expert in men's hair colour, grey blending, and scalp treatment programmes.",
@@ -234,28 +210,28 @@ const BARBERS = [
 
 const PRICING = {
   essentials: [
-    ["Haircut (Scissor or Clipper)", "AED 60", "€18"],
-    ["Beard Trim & Line-up", "AED 40", "€12"],
-    ["Hot Towel Shave", "AED 80", "€22"],
-    ["Eyebrow Shaping (Men's)", "AED 25", "€8"],
-    ["Hair Wash & Blowdry", "AED 50", "€14"],
-    ["Kids' Haircut (Boys Under 12)", "AED 45", "€14"],
+    ["Haircut (Scissor or Clipper)", "AED 60"],
+    ["Beard Trim & Line-up", "AED 40"],
+    ["Hot Towel Shave", "AED 80"],
+    ["Eyebrow Shaping (Men's)", "AED 25"],
+    ["Hair Wash & Blowdry", "AED 50"],
+    ["Kids' Haircut (Boys Under 12)", "AED 45"],
   ],
   signature: [
-    ["Cut + Beard Combo", "AED 150", "€42"],
-    ["Cut + Hot Towel Shave", "AED 180", "€52"],
-    ["Full Grooming Package", "AED 220", "€65"],
-    ["Hair Colour — Grey Blend", "AED 120", "€35"],
-    ["Beard Colour & Tint", "AED 80", "€25"],
-    ["Cut + Scalp Treatment", "AED 160", "€48"],
+    ["Cut + Beard Combo", "AED 150"],
+    ["Cut + Hot Towel Shave", "AED 180"],
+    ["Full Grooming Package", "AED 220"],
+    ["Hair Colour — Grey Blend", "AED 120"],
+    ["Beard Colour & Tint", "AED 80"],
+    ["Cut + Scalp Treatment", "AED 160"],
   ],
   premium: [
-    ["VIP Grooming Ritual (Cut + Beard + Shave)", "AED 350", "€100"],
-    ["Hair Replacement System Fitting", "AED 800", "€250"],
-    ["Groom's Package (Event Ready)", "AED 600", "€180"],
-    ["Full Hair Colour + Cut", "AED 300", "€90"],
-    ["Advanced Scalp Treatment Course", "AED 250", "€75"],
-    ["Monthly Membership (Unlimited Cuts)", "AED 499", "€149"],
+    ["VIP Grooming Ritual (Cut + Beard + Shave)", "AED 350"],
+    ["Hair Replacement System Fitting", "AED 800"],
+    ["Groom's Package (Event Ready)", "AED 600"],
+    ["Full Hair Colour + Cut", "AED 300"],
+    ["Advanced Scalp Treatment Course", "AED 250"],
+    ["Monthly Membership (Unlimited Cuts)", "AED 499"],
   ],
 };
 
@@ -299,49 +275,6 @@ function Reveal({
       }}
     >
       {children}
-    </div>
-  );
-}
-
-function LocationPills({
-  location,
-  setLocation,
-  size = "sm",
-}: {
-  location: LocationKey;
-  setLocation: (l: LocationKey) => void;
-  size?: "sm" | "md";
-}) {
-  const padding = size === "md" ? "10px 22px" : "6px 14px";
-  const fs = size === "md" ? 12 : 10;
-  return (
-    <div style={{ display: "flex", gap: 8 }}>
-      {(["dubai", "istanbul"] as LocationKey[]).map((k) => {
-        const active = location === k;
-        return (
-          <button
-            key={k}
-            onClick={() => setLocation(k)}
-            style={{
-              padding,
-              fontSize: fs,
-              fontFamily: "Inter, sans-serif",
-              fontWeight: active ? 700 : 500,
-              letterSpacing: "0.18em",
-              textTransform: "uppercase",
-              background: active ? "#D4AF37" : "transparent",
-              color: active ? "#111111" : "#888",
-              border: active ? "1px solid #D4AF37" : "1px solid #444",
-              borderRadius: 999,
-              cursor: "pointer",
-              transition: "all 0.3s ease",
-              whiteSpace: "nowrap",
-            }}
-          >
-            {LOCATIONS[k].flag} {LOCATIONS[k].label}
-          </button>
-        );
-      })}
     </div>
   );
 }
@@ -507,8 +440,7 @@ function VyneBarbershop() {
     fetch("https://ipapi.co/json/", { signal: ctrl.signal })
       .then((r) => r.json())
       .then((d) => {
-        if (d?.country_code === "TR") setLocation("istanbul");
-        else if (d?.country_code === "AE") setLocation("dubai");
+        if (d?.country_code === "AE") setLocation("dubai");
       })
       .catch(() => { })
       .finally(() => clearTimeout(t));
@@ -545,7 +477,7 @@ function VyneBarbershop() {
       >
         <div style={{ height: 85, marginLeft: 20 }}>
           <img
-            src="/wonderstouch logo.png"
+            src="/VYNE LOGO.jpeg"
             alt="VYNE BARBERSHOP Logo"
             style={{ height: "100%", width: "auto", display: "block" }}
           />
@@ -695,7 +627,7 @@ function VyneBarbershop() {
         </div>
 
         <div className="desktop-only" style={{ display: "flex", alignItems: "center", gap: 16 }}>
-          <LocationPills location={location} setLocation={setLocation} />
+          
           <button
             onClick={openBook}
             style={{
@@ -759,7 +691,7 @@ function VyneBarbershop() {
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
               <div style={{ height: 60 }}>
                 <img
-                  src="/wonderstouch logo.png"
+                  src="/VYNE LOGO.jpeg"
                   alt="VYNE BARBERSHOP Logo"
                   style={{ height: "100%", width: "auto", display: "block" }}
                 />
@@ -846,7 +778,7 @@ function VyneBarbershop() {
                   )}
                 </div>
               ))}
-              <LocationPills location={location} setLocation={setLocation} size="md" />
+              
             </div>
             <button
               onClick={() => {
@@ -1012,7 +944,7 @@ function VyneBarbershop() {
           {[
             ["15+", "Expert Barbers"],
             ["5,000+", "Men Served"],
-            ["2", "Cities Worldwide"],
+            ["Dubai", "Flagship Location"],
             ["4.9 ★", "Google Rating"],
           ].map(([n, l], i) => (
             <div
@@ -1240,7 +1172,6 @@ function VyneBarbershop() {
                 { name: "Gujjar Badsha", initial: "G", location: "Business Bay, Dubai", text: "Best experience ever, the staff is very professional and the atmosphere is great." },
                 { name: "Sufaid cherumoth", initial: "S", location: "DIFC, Dubai", text: "Highly recommended for anyone looking for a precision cut in Dubai." },
                 { name: "Frank Lin", initial: "F", location: "Umm Al Sheif, Dubai", text: "Great experience with Davido. He really knows how to style according to face shape." },
-                { name: "Ahmed Khan", initial: "A", location: "Elgün Sokağı, Istanbul", text: "The best skin fade I've had in years. Istanbul branch is top notch." },
                 { name: "James Wilson", initial: "J", location: "Sheikh Zayed Rd, Dubai", text: "Premium products and excellent service. Worth every dirham." }
               ].map((rev, idx) => (
                 <div key={idx} style={{
@@ -1287,7 +1218,7 @@ function VyneBarbershop() {
             <span style={{ fontSize: 10 }}>♦</span>
             <span>1,000+ MEN SERVED</span>
             <span style={{ fontSize: 10 }}>♦</span>
-            <span>2 CITIES</span>
+            <span>DUBAI</span>
           </div>
         </div>
       </section>
@@ -1325,7 +1256,7 @@ function VyneBarbershop() {
                 </h2>
                 {[
                   "VYNE BARBERSHOP wasn’t built to be just another barbershop, it was built to be yours.",
-                  "Two cities. Dubai & Istanbul. 15+ internationally trained barbers. One standard: leave looking your sharpest.",
+                  "Based in Dubai. 15+ internationally trained barbers. One standard: leave looking your sharpest.",
                   "Walk in. Sit down. Leave sharp.",
                 ].map((p, i) => (
                   <p
@@ -1345,7 +1276,7 @@ function VyneBarbershop() {
                   {[
                     "✦ Walk-ins Welcome",
                     "✦ Premium Men's Products",
-                    "✦ 2 Global Locations",
+                    "✦ Dubai Flagship",
                   ].map((t) => (
                     <span
                       key={t}
@@ -1507,11 +1438,10 @@ function VyneBarbershop() {
                 NO HIDDEN COSTS. EVER.
               </h2>
               <p style={{ fontSize: 14, color: "#888", maxWidth: 600, margin: "0 auto 30px" }}>
-                Starting prices for men's grooming services. Dubai in AED (VAT inclusive). Istanbul in
-                EUR.
+                Starting prices for men's grooming services. Dubai in AED (VAT inclusive).
               </p>
               <div style={{ display: "flex", justifyContent: "center" }}>
-                <LocationPills location={location} setLocation={setLocation} size="md" />
+                
               </div>
             </div>
           </Reveal>
@@ -1528,7 +1458,6 @@ function VyneBarbershop() {
               {
                 title: "ESSENTIALS",
                 priceD: "from AED 40",
-                priceI: "from €12",
                 desc: "Your everyday sharp-up, done right.",
                 items: PRICING.essentials,
                 bg: "#1A1A1A",
@@ -1538,7 +1467,6 @@ function VyneBarbershop() {
               {
                 title: "SIGNATURE",
                 priceD: "from AED 150",
-                priceI: "from €45",
                 desc: "Our most popular grooming combos — cut, beard, ritual.",
                 items: PRICING.signature,
                 bg: "#D4AF37",
@@ -1549,7 +1477,6 @@ function VyneBarbershop() {
               {
                 title: "PREMIUM",
                 priceD: "from AED 300",
-                priceI: "from €90",
                 desc: "Full transformations and specialist men's treatments.",
                 items: PRICING.premium,
                 bg: "#1A1A1A",
@@ -1604,7 +1531,7 @@ function VyneBarbershop() {
                     margin: "12px 0 8px",
                   }}
                 >
-                  {location === "dubai" ? card.priceD : card.priceI}
+                  {card.priceD}
                 </div>
                 <p
                   style={{
@@ -1622,7 +1549,7 @@ function VyneBarbershop() {
                     margin: "28px 0",
                   }}
                 />
-                {card.items.map(([name, dPrice, iPrice]) => (
+                {card.items.map(([name, dPrice]) => (
                   <div
                     key={name}
                     style={{
@@ -1646,7 +1573,7 @@ function VyneBarbershop() {
                         whiteSpace: "nowrap",
                       }}
                     >
-                      {location === "dubai" ? dPrice : iPrice}
+                      {dPrice}
                     </span>
                   </div>
                 ))}
@@ -1728,7 +1655,7 @@ function VyneBarbershop() {
               lineHeight: 1.7,
             }}
           >
-            Valid for new male clients at both our Dubai and Istanbul barbershops. No code needed —
+            Valid for new male clients at our Dubai barbershop. No code needed —
             just mention it when you WhatsApp to book your chair.
           </p>
           <div
@@ -1804,7 +1731,7 @@ function VyneBarbershop() {
                 >
                   VISIT VYNE BARBERSHOP
                 </h2>
-                <LocationPills location={location} setLocation={setLocation} size="md" />
+                
                 <div style={{ marginTop: 32, display: "flex", flexDirection: "column", gap: 18 }}>
                   {[
                     { Icon: MapPin, color: "#D4AF37", text: loc.address },
@@ -1881,7 +1808,7 @@ function VyneBarbershop() {
                     loc.mapEmbedSrc ??
                     googleMapsEmbedSrc(
                       loc.mapSearchQuery,
-                      location === "istanbul" ? "tr" : "en",
+                      "en",
                       loc.mapZoom,
                     )
                   }
@@ -1971,7 +1898,6 @@ function VyneBarbershop() {
                   "Meet the Barbers",
                   "Pricing",
                   "Dubai",
-                  "Istanbul",
                   "Contact",
                 ],
               },
@@ -1979,7 +1905,6 @@ function VyneBarbershop() {
                 title: "GET IN TOUCH",
                 items: [
                   "Umm Al Sheif, Dubai",
-                  "Elgün Sokağı, Istanbul",
                   "hello@vyne-barbershop.com",
                   "Sat–Sun: 9am – 10pm",
                 ],
@@ -2153,8 +2078,8 @@ function BookingModal({
             exit={{ scale: 0.95, y: 30 }}
             onClick={(e) => e.stopPropagation()}
             style={{
-              background: step === 5 ? "#D4AF37" : "#1A1A1A",
-              color: step === 5 ? "#111" : "#fff",
+              background: step === 4 ? "#D4AF37" : "#1A1A1A",
+              color: step === 4 ? "#111" : "#fff",
               maxWidth: 560,
               width: "100%",
               maxHeight: "90vh",
@@ -2172,7 +2097,7 @@ function BookingModal({
                 right: 16,
                 background: "transparent",
                 border: "none",
-                color: step === 5 ? "#111" : "#D4AF37",
+                color: step === 4 ? "#111" : "#D4AF37",
                 cursor: "pointer",
               }}
             >
@@ -2188,43 +2113,7 @@ function BookingModal({
               >
                 {step === 0 && (
                   <div>
-                    <div className="eyebrow" style={{ color: "#D4AF37" }}>STEP 1 / 5</div>
-                    <h3 className="bebas" style={{ fontSize: 38, margin: "10px 0 24px", color: "#fff" }}>
-                      CHOOSE YOUR LOCATION
-                    </h3>
-                    {(["dubai", "istanbul"] as LocationKey[]).map((k) => (
-                      <button
-                        key={k}
-                        onClick={() => {
-                          setLocation(k);
-                          next();
-                        }}
-                        style={{
-                          width: "100%",
-                          textAlign: "left",
-                          padding: "20px",
-                          background: location === k ? "#D4AF37" : "transparent",
-                          color: location === k ? "#111" : "#fff",
-                          border: "1px solid #D4AF37",
-                          marginBottom: 12,
-                          cursor: "pointer",
-                          fontSize: 16,
-                          fontFamily: "Inter",
-                          fontWeight: 500,
-                          display: "flex",
-                          justifyContent: "space-between",
-                          alignItems: "center",
-                        }}
-                      >
-                        <span>{LOCATIONS[k].flag} {LOCATIONS[k].label}</span>
-                        <ChevronRight size={20} />
-                      </button>
-                    ))}
-                  </div>
-                )}
-                {step === 1 && (
-                  <div>
-                    <div className="eyebrow">STEP 2 / 5</div>
+                    <div className="eyebrow">STEP 1 / 4</div>
                     <h3 className="bebas" style={{ fontSize: 38, margin: "10px 0 24px", color: "#fff" }}>
                       CHOOSE A SERVICE
                     </h3>
@@ -2253,9 +2142,9 @@ function BookingModal({
                     ))}
                   </div>
                 )}
-                {step === 2 && (
+                {step === 1 && (
                   <div>
-                    <div className="eyebrow">STEP 3 / 5</div>
+                    <div className="eyebrow">STEP 2 / 4</div>
                     <h3 className="bebas" style={{ fontSize: 38, margin: "10px 0 24px", color: "#fff" }}>
                       CHOOSE YOUR BARBER
                     </h3>
@@ -2284,9 +2173,9 @@ function BookingModal({
                     ))}
                   </div>
                 )}
-                {step === 3 && (
+                {step === 2 && (
                   <div>
-                    <div className="eyebrow">STEP 4 / 5</div>
+                    <div className="eyebrow">STEP 3 / 4</div>
                     <h3 className="bebas" style={{ fontSize: 38, margin: "10px 0 24px", color: "#fff" }}>
                       PICK DATE & TIME
                     </h3>
@@ -2388,9 +2277,9 @@ function BookingModal({
                     </div>
                   </div>
                 )}
-                {step === 4 && (
+                {step === 3 && (
                   <div>
-                    <div className="eyebrow">STEP 5 / 5</div>
+                    <div className="eyebrow">STEP 4 / 4</div>
                     <h3 className="bebas" style={{ fontSize: 38, margin: "10px 0 24px", color: "#fff" }}>
                       YOUR DETAILS
                     </h3>
@@ -2478,7 +2367,7 @@ function BookingModal({
                     </div>
                   </div>
                 )}
-                {step === 5 && (
+                {step === 4 && (
                   <div style={{ textAlign: "center" }}>
                     <h3 className="bebas" style={{ fontSize: 48, color: "#111", margin: "10px 0 20px" }}>
                       YOUR CHAIR IS RESERVED.
