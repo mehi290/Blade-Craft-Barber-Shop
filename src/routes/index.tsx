@@ -309,6 +309,85 @@ function VyneBarbershop() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [showLocationModal, setShowLocationModal] = useState(false);
 
+  // Auto-scroll logic for Services
+  useEffect(() => {
+    const el = document.getElementById("services-scroll");
+    if (!el) return;
+    let rafId: number;
+    let isPaused = false;
+    let lastTime = 0;
+
+    const scroll = (time: number) => {
+      if (!lastTime) lastTime = time;
+      const deltaTime = time - lastTime;
+      lastTime = time;
+
+      if (!isPaused) {
+        el.scrollLeft += 0.05 * deltaTime; // Smooth drift
+        if (el.scrollLeft >= el.scrollWidth / 3) {
+          el.scrollLeft = 0;
+        }
+      }
+      rafId = requestAnimationFrame(scroll);
+    };
+
+    const handleMouseEnter = () => { isPaused = true; };
+    const handleMouseLeave = () => { isPaused = false; lastTime = 0; };
+
+    el.addEventListener("mouseenter", handleMouseEnter);
+    el.addEventListener("mouseleave", handleMouseLeave);
+    el.addEventListener("touchstart", handleMouseEnter);
+    el.addEventListener("touchend", handleMouseLeave);
+
+    rafId = requestAnimationFrame(scroll);
+    return () => {
+      cancelAnimationFrame(rafId);
+      el.removeEventListener("mouseenter", handleMouseEnter);
+      el.removeEventListener("mouseleave", handleMouseLeave);
+      el.removeEventListener("touchstart", handleMouseEnter);
+      el.removeEventListener("touchend", handleMouseLeave);
+    };
+  }, []);
+
+  // Auto-scroll logic for Reviews
+  useEffect(() => {
+    const el = document.getElementById("reviews-scroll");
+    if (!el) return;
+    let rafId: number;
+    let isPaused = false;
+    let lastTime = 0;
+
+    const scroll = (time: number) => {
+      if (!lastTime) lastTime = time;
+      const deltaTime = time - lastTime;
+      lastTime = time;
+
+      if (!isPaused) {
+        el.scrollLeft += 0.04 * deltaTime; // Slightly slower for reading
+        if (el.scrollLeft >= el.scrollWidth / 3) {
+          el.scrollLeft = 0;
+        }
+      }
+      rafId = requestAnimationFrame(scroll);
+    };
+
+    const handleMouseEnter = () => { isPaused = true; };
+    const handleMouseLeave = () => { isPaused = false; lastTime = 0; };
+
+    el.addEventListener("mouseenter", handleMouseEnter);
+    el.addEventListener("mouseleave", handleMouseLeave);
+    el.addEventListener("touchstart", handleMouseEnter);
+    el.addEventListener("touchend", handleMouseLeave);
+
+    rafId = requestAnimationFrame(scroll);
+    return () => {
+      cancelAnimationFrame(rafId);
+      el.removeEventListener("mouseenter", handleMouseEnter);
+      el.removeEventListener("mouseleave", handleMouseLeave);
+      el.removeEventListener("touchstart", handleMouseEnter);
+      el.removeEventListener("touchend", handleMouseLeave);
+    };
+  }, []);
 
   const [reviewIdx, setReviewIdx] = useState(0);
   const [bookOpen, setBookOpen] = useState(false);
@@ -552,7 +631,7 @@ function VyneBarbershop() {
         </div>
 
         <div className="desktop-only" style={{ display: "flex", alignItems: "center", gap: 16 }}>
-          
+
           <button
             onClick={openBook}
             style={{
@@ -697,7 +776,7 @@ function VyneBarbershop() {
 
                 </div>
               ))}
-              
+
             </div>
             <button
               onClick={() => {
@@ -741,6 +820,7 @@ function VyneBarbershop() {
           muted
           loop
           playsInline
+          preload="auto"
           style={{
             position: "absolute",
             inset: 0,
@@ -967,90 +1047,74 @@ function VyneBarbershop() {
           `}
         </style>
 
-        <style>
-          {`
-            @keyframes marquee-services {
-              0% { transform: translateX(0); }
-              100% { transform: translateX(calc(-100% / 3)); }
-            }
-            .services-marquee {
-              display: flex;
-              gap: 20px;
-              width: max-content;
-              animation: marquee-services 40s linear infinite;
-            }
-            .services-marquee:hover {
-              animation-play-state: paused;
-            }
-          `}
-        </style>
-
         <div
-          id="services-scroll-wrapper"
+          id="services-scroll"
           style={{
-            overflow: "hidden",
-            width: "100%",
-            padding: "20px 0"
+            display: "flex",
+            overflowX: "auto",
+            padding: "20px 0",
+            msOverflowStyle: "none",
+            scrollbarWidth: "none",
+            gap: 20
           }}
         >
-          <div className="services-marquee">
-            {[...Array(3)].map((_, loopIdx) => (
-              <React.Fragment key={loopIdx}>
-                {[
-                  { name: "Hair Cut", video: "/long-hair-cut-men.mp4" },
-                  { name: "Kids Hair Cut", video: "/baby-men-hair-cut.mp4" },
-                  { name: "Medium Fade Hair Cut", video: "/medium-fade-hair-cut-men.mp4" },
-                  { name: "Skin Fade Haircut", video: "/skin-fade-hair-cut.mp4" },
-                  { name: "Hair Perm & Styling", video: "/perm-hairstyle.mp4" },
-                  { name: "Grooming Packages", video: "/grooming-package.mp4" },
-                  { name: "Beard Trimming", video: "/beard-lineup.mp4" },
-                  { name: "Manicure", img: "/manicure man.jpg" },
-                  { name: "Pedicure", video: "/pedicure-men.mp4" },
-                  { name: "Facial Treatment", img: "/FACIAl.jpeg" },
-                ].map((s, idx) => (
-                  <div key={`${loopIdx}-${idx}`} className="service-card" style={{ backgroundImage: s.img ? `url("${s.img}")` : "none" }}>
-                    {s.video && (
-                      <video
-                        autoPlay
-                        muted
-                        loop
-                        playsInline
-                        style={{
-                          position: "absolute",
-                          inset: 0,
-                          width: "100%",
-                          height: "100%",
-                          objectFit: "cover",
-                          zIndex: 0
-                        }}
-                      >
-                        <source src={s.video || ""} type="video/mp4" />
-                      </video>
-                    )}
-                    <div className="service-content">
-                      <h3 className="bebas" style={{ fontSize: 32, color: "#fff", margin: "0 0 15px" }}>{s.name}</h3>
-                      <button
-                        onClick={openBook}
-                        style={{
-                          background: "#D4AF37",
-                          color: "#fff",
-                          border: "none",
-                          padding: "10px 20px",
-                          fontSize: 12,
-                          fontWeight: "bold",
-                          letterSpacing: "0.1em",
-                          cursor: "pointer",
-                          borderRadius: "2px"
-                        }}
-                      >
-                        BOOK NOW
-                      </button>
-                    </div>
+          {[...Array(3)].map((_, loopIdx) => (
+            <React.Fragment key={loopIdx}>
+              {[
+                { name: "Hair Cut", video: "/long-hair-cut-men.mp4" },
+                { name: "Kids Hair Cut", video: "/baby-men-hair-cut.mp4" },
+                { name: "Medium Fade Hair Cut", video: "/medium-fade-hair-cut-men.mp4" },
+                { name: "Skin Fade Haircut", video: "/skin-fade-hair-cut.mp4" },
+                { name: "Hair Perm & Styling", video: "/perm-hairstyle.mp4" },
+                { name: "Grooming Packages", video: "/grooming-package.mp4" },
+                { name: "Beard Trimming", video: "/beard-lineup.mp4" },
+                { name: "Manicure", img: "/manicure man.jpg" },
+                { name: "Pedicure", video: "/pedicure-men.mp4" },
+                { name: "Facial Treatment", img: "/FACIAl.jpeg" },
+              ].map((s, idx) => (
+                <div key={`${loopIdx}-${idx}`} className="service-card" style={{ backgroundImage: s.img ? `url("${s.img}")` : "none" }}>
+                  {s.video && (
+                    <video
+                      autoPlay
+                      muted
+                      loop
+                      playsInline
+                      preload="auto"
+                      style={{
+                        position: "absolute",
+                        inset: 0,
+                        width: "100%",
+                        height: "100%",
+                        objectFit: "cover",
+                        zIndex: 0
+                      }}
+                    >
+                      <source src={s.video} type="video/mp4" />
+                    </video>
+                  )}
+                  <div className="service-content">
+                    <h3 className="bebas" style={{ fontSize: 32, color: "#fff", margin: "0 0 15px" }}>{s.name}</h3>
+                    <button
+                      onClick={openBook}
+                      style={{
+                        background: "#D4AF37",
+                        color: "#fff",
+                        border: "none",
+                        padding: "10px 20px",
+                        fontSize: 12,
+                        fontWeight: "bold",
+                        letterSpacing: "0.1em",
+                        cursor: "pointer",
+                        borderRadius: "2px"
+                      }}
+                    >
+                      BOOK NOW
+                    </button>
                   </div>
-                ))}
-              </React.Fragment>
-            ))}
-          </div>
+                </div>
+              ))}
+            </React.Fragment>
+          ))}
         </div>
       </section>
 
@@ -1096,81 +1160,62 @@ function VyneBarbershop() {
               <ChevronRight size={20} />
             </button>
 
-            <style>
-              {`
-                @keyframes marquee-reviews {
-                  0% { transform: translateX(0); }
-                  100% { transform: translateX(calc(-100% / 3)); }
-                }
-                .reviews-marquee {
-                  display: flex;
-                  gap: 30px;
-                  width: max-content;
-                  animation: marquee-reviews 40s linear infinite;
-                }
-                .reviews-marquee:hover {
-                  animation-play-state: paused;
-                }
-              `}
-            </style>
             <div
-              id="reviews-scroll-wrapper"
+              id="reviews-scroll"
               style={{
-                overflow: "hidden",
-                width: "100%",
-                padding: "20px 0"
+                display: "flex", gap: 30, overflowX: "auto", padding: "20px 0",
+                msOverflowStyle: "none",
+                scrollbarWidth: "none"
               }}
             >
-              <div className="reviews-marquee">
-                {[...Array(3)].map((_, loopIdx) => (
-                  <React.Fragment key={loopIdx}>
-                    {[
-                      { name: "Gujjar Badsha", initial: "G", location: "Helio, Ajman", text: "Best experience ever, the staff is very professional and the atmosphere is great." },
-                      { name: "Sufaid cherumoth", initial: "S", location: "Helio, Ajman", text: "Highly recommended for anyone looking for a precision cut in Ajman." },
-                      { name: "Frank Lin", initial: "F", location: "Al Helio, Ajman", text: "Great experience with Davido. He really knows how to style according to face shape." },
-                      { name: "James Wilson", initial: "J", location: "Helio, Ajman", text: "Premium products and excellent service. Worth every dirham." }
-                    ].map((rev, idx) => (
-                      <div key={`${loopIdx}-${idx}`} style={{
-                        flex: "0 0 380px", 
-                        background: "#1A1A1A", padding: "40px",
-                        display: "flex", flexDirection: "column", gap: 25, borderTop: "4px solid #D4AF37",
-                        position: "relative"
+              {[...Array(3)].map((_, loopIdx) => (
+                <React.Fragment key={loopIdx}>
+                  {[
+                    { name: "Gujjar Badsha", initial: "G", location: "Helio, Ajman", text: "Best experience ever, the staff is very professional and the atmosphere is great." },
+                    { name: "Sufaid cherumoth", initial: "S", location: "Helio, Ajman", text: "Highly recommended for anyone looking for a precision cut in Ajman." },
+                    { name: "Frank Lin", initial: "F", location: "Al Helio, Ajman", text: "Great experience with Davido. He really knows how to style according to face shape." },
+                    { name: "James Wilson", initial: "J", location: "Helio, Ajman", text: "Premium products and excellent service. Worth every dirham." }
+                  ].map((rev, idx) => (
+                    <div key={`${loopIdx}-${idx}`} style={{
+                      flex: isMobile ? "0 0 85%" : "0 0 380px",
+                      background: "#1A1A1A", padding: "40px",
+                      display: "flex", flexDirection: "column", gap: 25, borderTop: "4px solid #D4AF37",
+                      position: "relative"
+                    }}>
+                      <div style={{ display: "flex", gap: 4, marginBottom: -10 }}>
+                        {[...Array(5)].map((_, i) => <Star key={i} size={14} fill="#D4AF37" color="#D4AF37" />)}
+                      </div>
+                      <Quote size={32} color="#D4AF37" style={{ opacity: 0.8 }} />
+                      <p style={{
+                        fontSize: 16, color: "#eee", lineHeight: 1.8, margin: 0,
+                        fontStyle: "italic", fontWeight: 300
                       }}>
-                        <div style={{ display: "flex", gap: 4, marginBottom: -10 }}>
-                          {[...Array(5)].map((_, i) => <Star key={i} size={14} fill="#D4AF37" color="#D4AF37" />)}
-                        </div>
-                        <Quote size={32} color="#D4AF37" style={{ opacity: 0.8 }} />
-                        <p style={{
-                          fontSize: 16, color: "#eee", lineHeight: 1.8, margin: 0,
-                          fontStyle: "italic", fontWeight: 300
+                        "{rev.text}"
+                      </p>
+                      <div style={{ marginTop: "auto", display: "flex", gap: 15, alignItems: "center" }}>
+                        <div style={{
+                          width: 40, height: 40, borderRadius: "50%", background: "#D4AF37",
+                          display: "flex", alignItems: "center", justifyContent: "center",
+                          color: "#000", fontWeight: "bold", fontSize: 14
                         }}>
-                          "{rev.text}"
-                        </p>
-                        <div style={{ marginTop: "auto", display: "flex", gap: 15, alignItems: "center" }}>
-                          <div style={{
-                            width: 40, height: 40, borderRadius: "50%", background: "#D4AF37",
-                            display: "flex", alignItems: "center", justifyContent: "center",
-                            color: "#000", fontWeight: "bold", fontSize: 14
-                          }}>
-                            {rev.initial}
-                          </div>
-                          <div>
-                            <div style={{ fontSize: 15, fontWeight: 600, color: "#fff" }}>{rev.name}</div>
-                            <div style={{ fontSize: 12, color: "#666" }}>
-                              {rev.location} • Google Reviews
-                            </div>
+                          {rev.initial}
+                        </div>
+                        <div>
+                          <div style={{ fontSize: 15, fontWeight: 600, color: "#fff" }}>{rev.name}</div>
+                          <div style={{ fontSize: 12, color: "#666" }}>
+                            {rev.location} • Google Reviews
                           </div>
                         </div>
                       </div>
-                    ))}
-                  </React.Fragment>
-                ))}
-              </div>
+                    </div>
+                  ))}
+                </React.Fragment>
+              ))}
             </div>
           </div>
-          
-          <div style={{ 
-            display: "flex", alignItems: "center", justifyContent: "center", 
+
+          <div style={{
+            display: "flex", alignItems: "center", justifyContent: "center",
             gap: isMobile ? 15 : 40, marginTop: 50, color: "#D4AF37",
             fontSize: isMobile ? 10 : 13, fontWeight: 700, letterSpacing: "0.2em"
           }}>
@@ -1195,13 +1240,7 @@ function VyneBarbershop() {
                 alignItems: "center",
               }}
             >
-              {isMobile && (
-                <img
-                  src="/vyne about us.jpeg"
-                  alt="Barber at work"
-                  style={{ width: "100%", height: 300, objectFit: "cover" }}
-                />
-              )}
+
               <div>
                 <h2
                   className="bebas"
@@ -1276,16 +1315,16 @@ function VyneBarbershop() {
         <div className="ws-container">
           <Reveal>
             <div style={{ textAlign: "center", marginBottom: 30 }}>
-                <h2
-                  className="bebas"
-                  style={{
-                    fontSize: "clamp(32px, 4vw, 48px)",
-                    color: "#fff",
-                    margin: 0,
-                  }}
-                >
-                  THE CUTS SPEAK FOR THEMSELVES
-                </h2>
+              <h2
+                className="bebas"
+                style={{
+                  fontSize: "clamp(32px, 4vw, 48px)",
+                  color: "#fff",
+                  margin: 0,
+                }}
+              >
+                THE CUTS SPEAK FOR THEMSELVES
+              </h2>
             </div>
           </Reveal>
           <div
@@ -1312,11 +1351,11 @@ function VyneBarbershop() {
                   {isVideo ? (
                     <video
                       className="gallery-img"
-                      src={src}
                       autoPlay
                       muted
                       loop
                       playsInline
+                      preload="auto"
                       style={{
                         width: "100%",
                         height: "100%",
@@ -1324,7 +1363,9 @@ function VyneBarbershop() {
                         display: "block",
                         transition: "transform 0.5s ease",
                       }}
-                    />
+                    >
+                      <source src={src} type="video/mp4" />
+                    </video>
                   ) : (
                     <img
                       className="gallery-img"
@@ -1385,7 +1426,6 @@ function VyneBarbershop() {
         <div className="ws-container">
           <Reveal>
             <div style={{ textAlign: "center", marginBottom: 40 }}>
-              <div className="eyebrow">TRANSPARENT PRICING</div>
               <h2
                 className="bebas"
                 style={{
@@ -1394,13 +1434,10 @@ function VyneBarbershop() {
                   margin: "16px 0 14px",
                 }}
               >
-                NO HIDDEN COSTS. EVER.
+                BOOK ANY SERVICE
               </h2>
-              <p style={{ fontSize: 14, color: "#888", maxWidth: 600, margin: "0 auto 30px" }}>
-                Starting prices for men's grooming services. Ajman in AED (VAT inclusive).
-              </p>
               <div style={{ display: "flex", justifyContent: "center" }}>
-                
+
               </div>
             </div>
           </Reveal>
@@ -1565,17 +1602,7 @@ function VyneBarbershop() {
               </div>
             ))}
           </div>
-          <p
-            style={{
-              textAlign: "center",
-              fontSize: 11,
-              color: "#555",
-              marginTop: 30,
-            }}
-          >
-            * Starting prices for men's grooming services. Final cost confirmed at booking. VAT
-            inclusive for Ajman.
-          </p>
+
         </div>
       </section>
 
@@ -1614,7 +1641,7 @@ function VyneBarbershop() {
               lineHeight: 1.7,
             }}
           >
-             Valid for new male clients at our Ajman barbershop. No code needed —
+            Valid for new male clients at our Ajman barbershop. No code needed —
             just mention it when you WhatsApp to book your chair.
           </p>
           <div
@@ -1690,7 +1717,7 @@ function VyneBarbershop() {
                 >
                   VISIT VYNE BARBERSHOP
                 </h2>
-                
+
                 <div style={{ marginTop: 32, display: "flex", flexDirection: "column", gap: 18 }}>
                   {[
                     { Icon: MapPin, color: "#D4AF37", text: loc.address },
