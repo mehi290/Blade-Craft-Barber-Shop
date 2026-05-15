@@ -25,17 +25,17 @@ export const Route = createFileRoute("/")({
   component: VyneBarbershop,
   head: () => ({
     meta: [
-      { title: "VYNE BARBERSHOP — Men's Barbershop & Grooming Lounge | Dubai" },
+      { title: "VYNE BARBERSHOP — Men's Barbershop & Grooming Lounge | Ajman" },
       {
         name: "description",
         content:
-          "VYNE BARBERSHOP is a premier men's barbershop located in Umm Al Sheif, Dubai. Precision cuts, beards, hot towel shaves.",
+          "VYNE BARBERSHOP is a premier men's barbershop located in Al Helio 2, Ajman. Precision cuts, beards, hot towel shaves.",
       },
     ],
   }),
 });
 
-type LocationKey = "dubai";
+type LocationKey = "ajman";
 
 function googleMapsEmbedSrc(query: string, hl?: string, zoom?: number) {
   const hlPart = hl ? `&hl=${hl}` : "";
@@ -66,20 +66,17 @@ const LOCATIONS: Record<
     mapZoom?: number;
   }
 > = {
-  dubai: {
+  ajman: {
     flag: "🇦🇪",
-    label: "DUBAI",
-    address:
-      "Al Asmawi Building, 1st floor, Office #121.\nBeside MG Motor showroom, near Umm Al Sheif Metro Station, Sheikh Zayed Road, Dubai.",
+    label: "AJMAN",
+    address: "Al Helio 2 St 2, Helio, Ajman, United Arab Emirates",
     phone: "+971 50 947 4850",
     whatsapp: "+971 50 947 4850",
     hours: "Sat–Thu: 9:00 AM – 10:00 PM  •  Fri: 2:00 PM – 10:00 PM",
     currency: "AED",
-    mapLabel: "Al Asmawi Building, Sheikh Zayed Road, Dubai",
-    // Matches the public Google listing card (“VYNE BARBERSHOP Barbershop Dubai”) so the embed shows the same place, pin, and info panel as on Google Maps.
-    mapSearchQuery:
-      "VYNE BARBERSHOP Barbershop Dubai, Before Bentley show rooms, Al Asmawi Building - Ground floor, office #11 - Sheikh Zayed Rd - Umm Al Sheif - Dubai - United Arab Emirates",
-    mapZoom: 11,
+    mapLabel: "Al Helio 2, Ajman",
+    mapSearchQuery: "Al Helio 2 St 2, Helio, Ajman, United Arab Emirates",
+    mapZoom: 14,
   },
 };
 
@@ -123,7 +120,7 @@ const SERVICES = [
   {
     name: "Haircut & Styling",
     img: "https://images.unsplash.com/photo-1503951914875-452162b0f3f1?w=600&q=80",
-    desc: "Precision cuts, skin fades, taper fades, and textured crops for every hair type. From AED 60.",
+    desc: "Precision haircuts and beards in the heart of Ajman. Experience the VYNE standard. From AED 60.",
   },
   {
     name: "Beard Trim & Sculpting",
@@ -143,7 +140,7 @@ const SERVICES = [
   {
     name: "Men's Grooming Packages",
     img: "https://images.unsplash.com/photo-1605497788044-5a32c7078486?w=600&q=80",
-    desc: "Cut + beard + hot towel shave combo packages. Dubai from AED 150.",
+    desc: "Cut + beard + hot towel shave combo packages. Ajman from AED 150.",
   },
   {
     name: "Scalp & Hair Treatments",
@@ -164,16 +161,16 @@ const GALLERY = [
 const REVIEWS = [
   {
     quote:
-      "The best fade I've ever had — and I've sat in chairs across London, Riyadh, and New York. VYNE BARBERSHOP Dubai is on another level. The hot towel shave alone is worth the visit.",
+      "The best fade I've ever had — and I've sat in chairs across London, Riyadh, and New York. VYNE BARBERSHOP Ajman is on another level. The hot towel shave alone is worth the visit.",
     name: "Khalid A.",
-    where: "Business Bay, Dubai",
+    where: "Al Helio, Ajman",
     initial: "K",
   },
   {
     quote:
       "I drive from Business Bay every two weeks just for this place. My barber knows exactly what I want before I even sit down. Sharp, fast, and professional every single time.",
     name: "Marcus T.",
-    where: "DIFC, Dubai",
+    where: "Helio, Ajman",
     initial: "M",
   },
 ];
@@ -182,7 +179,7 @@ const BARBERS = [
   {
     name: "Marcus",
     title: "SENIOR FADE SPECIALIST",
-    bio: "10 years of precision fades and taper cuts, trained across London and Dubai.",
+    bio: "10 years of precision fades and taper cuts, trained across London and Ajman.",
     img: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&q=80",
   },
   {
@@ -312,10 +309,9 @@ function GoldButton({
 }
 
 function VyneBarbershop() {
-  const [location, setLocation] = useState<LocationKey>("dubai");
+  const [location, setLocation] = useState<LocationKey>("ajman");
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [isDubai, setIsDubai] = useState(true);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [showLocationModal, setShowLocationModal] = useState(false);
 
@@ -431,7 +427,7 @@ function VyneBarbershop() {
     fetch("https://ipapi.co/json/", { signal: ctrl.signal })
       .then((r) => r.json())
       .then((d) => {
-        if (d?.country_code === "AE") setLocation("dubai");
+        if (d?.country_code === "AE") setLocation("ajman");
       })
       .catch(() => { })
       .finally(() => clearTimeout(t));
@@ -897,7 +893,7 @@ function VyneBarbershop() {
           {[
             ["15+", "Expert Barbers"],
             ["5,000+", "Men Served"],
-            ["Dubai", "Flagship Location"],
+            ["Ajman", "Flagship Location"],
             ["4.9 ★", "Google Rating"],
           ].map(([n, l], i) => (
             <div
@@ -1122,10 +1118,10 @@ function VyneBarbershop() {
               }}
             >
               {[
-                { name: "Gujjar Badsha", initial: "G", location: "Business Bay, Dubai", text: "Best experience ever, the staff is very professional and the atmosphere is great." },
-                { name: "Sufaid cherumoth", initial: "S", location: "DIFC, Dubai", text: "Highly recommended for anyone looking for a precision cut in Dubai." },
-                { name: "Frank Lin", initial: "F", location: "Umm Al Sheif, Dubai", text: "Great experience with Davido. He really knows how to style according to face shape." },
-                { name: "James Wilson", initial: "J", location: "Sheikh Zayed Rd, Dubai", text: "Premium products and excellent service. Worth every dirham." }
+                { name: "Gujjar Badsha", initial: "G", location: "Helio, Ajman", text: "Best experience ever, the staff is very professional and the atmosphere is great." },
+                { name: "Sufaid cherumoth", initial: "S", location: "Helio, Ajman", text: "Highly recommended for anyone looking for a precision cut in Ajman." },
+                { name: "Frank Lin", initial: "F", location: "Al Helio, Ajman", text: "Great experience with Davido. He really knows how to style according to face shape." },
+                { name: "James Wilson", initial: "J", location: "Helio, Ajman", text: "Premium products and excellent service. Worth every dirham." }
               ].map((rev, idx) => (
                 <div key={idx} style={{
                   flex: isMobile ? "0 0 85%" : "0 0 380px", background: "#1A1A1A", padding: "40px",
@@ -1171,7 +1167,7 @@ function VyneBarbershop() {
             <span style={{ fontSize: 10 }}>♦</span>
             <span>1,000+ MEN SERVED</span>
             <span style={{ fontSize: 10 }}>♦</span>
-            <span>DUBAI</span>
+            <span>AJMAN</span>
           </div>
         </div>
       </section>
@@ -1209,7 +1205,7 @@ function VyneBarbershop() {
                 </h2>
                 {[
                   "VYNE BARBERSHOP wasn’t built to be just another barbershop, it was built to be yours.",
-                  "Based in Dubai. 15+ internationally trained barbers. One standard: leave looking your sharpest.",
+                  "Based in Ajman. 15+ internationally trained barbers. One standard: leave looking your sharpest.",
                   "Walk in. Sit down. Leave sharp.",
                 ].map((p, i) => (
                   <p
@@ -1229,7 +1225,7 @@ function VyneBarbershop() {
                   {[
                     "✦ Walk-ins Welcome",
                     "✦ Premium Men's Products",
-                    "✦ Dubai Flagship",
+                    "✦ Ajman Flagship",
                   ].map((t) => (
                     <span
                       key={t}
@@ -1391,7 +1387,7 @@ function VyneBarbershop() {
                 NO HIDDEN COSTS. EVER.
               </h2>
               <p style={{ fontSize: 14, color: "#888", maxWidth: 600, margin: "0 auto 30px" }}>
-                Starting prices for men's grooming services. Dubai in AED (VAT inclusive).
+                Starting prices for men's grooming services. Ajman in AED (VAT inclusive).
               </p>
               <div style={{ display: "flex", justifyContent: "center" }}>
                 
@@ -1568,7 +1564,7 @@ function VyneBarbershop() {
             }}
           >
             * Starting prices for men's grooming services. Final cost confirmed at booking. VAT
-            inclusive for Dubai.
+            inclusive for Ajman.
           </p>
         </div>
       </section>
@@ -1608,7 +1604,7 @@ function VyneBarbershop() {
               lineHeight: 1.7,
             }}
           >
-            Valid for new male clients at our Dubai barbershop. No code needed —
+             Valid for new male clients at our Ajman barbershop. No code needed —
             just mention it when you WhatsApp to book your chair.
           </p>
           <div
@@ -1850,14 +1846,14 @@ function VyneBarbershop() {
                   "Our Work",
                   "Meet the Barbers",
                   "Pricing",
-                  "Dubai",
+                  "Ajman",
                   "Contact",
                 ],
               },
               {
                 title: "GET IN TOUCH",
                 items: [
-                  "Umm Al Sheif, Dubai",
+                  "Al Helio 2, Ajman",
                   "hello@vyne-barbershop.com",
                   "Sat–Sun: 9am – 10pm",
                 ],
