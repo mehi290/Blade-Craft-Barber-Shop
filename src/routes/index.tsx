@@ -892,7 +892,7 @@ function VyneBarbershop() {
         >
           {[
             ["15+", "Expert Barbers"],
-            ["5,000+", "Men Served"],
+            ["79+", "Happy Clients"],
             ["Ajman", "Flagship Location"],
             ["4.9 ★", "Google Rating"],
           ].map(([n, l], i) => (
@@ -1076,7 +1076,7 @@ function VyneBarbershop() {
             </h2>
             <div style={{ width: 60, height: 2, background: "#D4AF37", margin: "0 auto 20px" }} />
             <p style={{ color: "#888", fontSize: 15, maxWidth: 700, margin: "0 auto", lineHeight: 1.6 }}>
-              With 100+ Google Reviews and a 4.6 rating our professional barbers guarantee unmatched
+              With 79 Google Reviews and a 4.9 rating our professional barbers guarantee unmatched
               satisfaction in every service. Here's what our guys say.  </p>
           </div>
 
