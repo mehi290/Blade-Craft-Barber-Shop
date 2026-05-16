@@ -1715,6 +1715,7 @@ function VyneBarbershop() {
               BOOK ON WHATSAPP
             </button>
             <button
+              onClick={() => window.location.href = `tel:${loc.phone.replace(/\s/g, '')}`}
               style={{
                 background: "transparent",
                 color: "#fff",
@@ -1777,6 +1778,7 @@ function VyneBarbershop() {
                 </div>
                 <div style={{ display: "flex", gap: 12, marginTop: 32, flexWrap: "wrap" }}>
                   <button
+                    onClick={() => window.location.href = `tel:${loc.phone.replace(/\s/g, '')}`}
                     style={{
                       background: "#D4AF37",
                       color: "#111",
@@ -1931,6 +1933,7 @@ function VyneBarbershop() {
                 title: "GET IN TOUCH",
                 items: [
                   "Al Helio 2, Ajman",
+                  loc.phone,
                   "hello@vyne-barbershop.com",
                   "Sat–Sun: 9am – 10pm",
                 ],
