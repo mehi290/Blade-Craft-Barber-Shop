@@ -129,7 +129,7 @@ const GALLERY = [
   "/perm-hairstyle.mp4",
   "/men-hair-color.mp4",
   "/our-work.mp4",
-  "/vyne-hero.mp4",
+  "/bladehero.mp4",
 ];
 
 const REVIEWS = [
@@ -513,7 +513,7 @@ function BladeCraftBarbershop() {
       >
         <div style={{ height: 120, marginLeft: 20 }}>
           <img
-            src="/vyne logo.png"
+            src="/bladecraft logo remove.png"
             alt="BLADE CRAFT BARBERSHOP Logo"
             style={{ height: "100%", width: "auto", display: "block" }}
           />
@@ -714,7 +714,7 @@ function BladeCraftBarbershop() {
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
               <div style={{ height: 90 }}>
                 <img
-                  src="/vyne logo.png"
+                  src="/bladecraft logo remove.png"
                   alt="BLADE CRAFT BARBERSHOP Logo"
                   style={{ height: "100%", width: "auto", display: "block" }}
                 />
@@ -848,7 +848,7 @@ function BladeCraftBarbershop() {
             objectFit: "cover",
           }}
         >
-          <source src="/vyne-hero.mp4" type="video/mp4" />
+          <source src="/bladehero.mp4" type="video/mp4" />
         </video>
         <div
           style={{
@@ -961,8 +961,8 @@ function BladeCraftBarbershop() {
         >
           {[
             ["15+", "Expert Barbers"],
-            ["79+", "Happy Clients"],
-            ["4.9 ★", "Google Rating"],
+            ["207+", "Happy Clients"],
+            ["4.7 ★", "Google Rating"],
           ].map(([n, l], i) => (
             <div
               key={l}
@@ -1156,7 +1156,7 @@ function BladeCraftBarbershop() {
             </h2>
             <div style={{ width: 60, height: 2, background: "#D4AF37", margin: "0 auto 20px" }} />
             <p style={{ color: "#888", fontSize: 15, maxWidth: 700, margin: "0 auto", lineHeight: 1.6 }}>
-              With 79 Google Reviews and a 4.9 rating our professional barbers guarantee unmatched
+              With 207 Google Reviews and a 4.7 rating our professional barbers guarantee unmatched
               satisfaction in every service. Here's what our guys say.  </p>
           </div>
 
@@ -1252,7 +1252,7 @@ function BladeCraftBarbershop() {
             gap: isMobile ? 15 : 40, marginTop: 50, color: "#D4AF37",
             fontSize: isMobile ? 10 : 13, fontWeight: 700, letterSpacing: "0.2em"
           }}>
-            <span>4.9 / 5 ON GOOGLE</span>
+            <span>4.7 / 5 ON GOOGLE</span>
             <span style={{ fontSize: 10 }}>♦</span>
             <span>1,000+ MEN SERVED</span>
             <span style={{ fontSize: 10 }}>♦</span>
@@ -1327,7 +1327,7 @@ function BladeCraftBarbershop() {
                 </div>
               </div>
               <img
-                src="/vyne about us.jpeg"
+                src="/bradabout.jpg"
                 alt="About BLADE CRAFT BARBERSHOP"
                 style={{
                   width: "100%",
@@ -1434,7 +1434,7 @@ function BladeCraftBarbershop() {
             })}
           </div>
           <a
-            href="https://www.instagram.com/vynesalon?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw=="
+            href="https://www.instagram.com/bladecraftae/"
             target="_blank"
             rel="noopener noreferrer"
             style={{
@@ -1453,7 +1453,7 @@ function BladeCraftBarbershop() {
           >
             <Instagram size={18} color="#D4AF37" />
             <span>Follow our work on Instagram</span>
-            <span style={{ color: "#D4AF37", fontWeight: 600 }}>@vynesalon</span>
+            <span style={{ color: "#D4AF37", fontWeight: 600 }}>@bladecraftae</span>
             <ArrowRight size={14} color="#D4AF37" />
           </a>
         </div>
