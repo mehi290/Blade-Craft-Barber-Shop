@@ -70,8 +70,8 @@ const LOCATIONS: Record<
     flag: "🇦🇪",
     label: "DUBAI MARINA",
     address: "Blade Craft - Al Khayay St - Marina gate 2 - Dubai Marina - Dubai",
-    phone: "042565595",
-    whatsapp: "042565595",
+    phone: "04 256 5595",
+    whatsapp: "04 256 5595",
     hours: "Sat–Thu: 9:00 AM – 10:00 PM  •  Fri: 2:00 PM – 10:00 PM",
     currency: "AED",
     mapLabel: "Dubai Marina, Dubai",
@@ -2090,7 +2090,9 @@ function BookingModal({
   const times = ["10:00", "11:30", "13:00", "14:30", "16:00", "17:30", "19:00"];
 
   const summary = `Booking at BLADE CRAFT BARBERSHOP ${LOCATIONS[location].label}\nService: ${service}\nBarber: ${barber}\nDate: ${date}\nTime: ${time}\nName: ${name}\nPhone: ${phone}`;
-  const waLink = `https://wa.me/${LOCATIONS[location].whatsapp.replace(/\D/g, "")}?text=${encodeURIComponent(summary)}`;
+  const cleanWaNumber = LOCATIONS[location].whatsapp.replace(/\D/g, "");
+  const waNumberWithCountry = cleanWaNumber.startsWith("971") ? cleanWaNumber : (cleanWaNumber.startsWith("0") ? "971" + cleanWaNumber.substring(1) : "971" + cleanWaNumber);
+  const waLink = `https://wa.me/${waNumberWithCountry}?text=${encodeURIComponent(summary)}`;
 
   return (
     <AnimatePresence>
